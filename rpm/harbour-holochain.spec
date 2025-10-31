@@ -25,17 +25,21 @@ BuildRequires:  clang-devel clang-libs clang-tools-extra clang-tools-extra-devel
 %description
 A minimal example to (cross-)compile an Holochain binary in Sailfish OS.
 
-%define BUILD_DIR "$PWD"/target
+%define BUILD_DIR "$PWD"/builddir
 
 %define BUILD_TARGET aarch64-unknown-linux-gnu
 
 # - PREP -----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}-%{version}
+
 mkdir -p "%{BUILD_DIR}"
 
 # - BUILD ----------------------------------------------------------------------
 %build
+
+export CARGO_HOME="%{BUILD_DIR}/cargohome"
+export CARGO_TARGET_DIR="%{BUILD_DIR}/cargotargetdir"
 
 curl -o rustup-init https://static.rust-lang.org/rustup/dist/aarch64-unknown-linux-gnu/rustup-init
 
@@ -43,13 +47,11 @@ chmod +x rustup-init
 
 ./rustup-init -v --default-host aarch64-unknown-linux-gnu -y
 
-source ~/.cargo/env
+source $CARGO_HOME/env
 
 rustc --version
 
 cargo --version
-
-#export CARGO_HOME="%{BUILD_DIR}/cargo"
 
 export CARGO_BUILD_TARGET=%{BUILD_TARGET}
 export RUST_HOST_TARGET=%{BUILD_TARGET}
@@ -66,20 +68,13 @@ export AR_aarch64_unknown_linux_gnu=aarch64-meego-linux-gnu-ar
 
 cargo install \
           --locked \
-          --target-dir=%{BUILD_DIR} \
           --target aarch64-unknown-linux-gnu \
           holochain@%{version}
 
 # - INSTALL --------------------------------------------------------------------
 %install
 
-install -Dm 755 target/release/%{BUILD_TARGET}/%{name} -t %{buildroot}%{_bindir}
-install -Dm 755 target/%{BUILD_TARGET}/release/%{name} -t %{buildroot}%{_bindir}
-
 # - FILES ----------------------------------------------------------------------
 %files
 
-%defattr(-,root,root,-)
 %{_bindir}
-
-
