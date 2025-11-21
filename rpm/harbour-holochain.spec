@@ -21,6 +21,7 @@ BuildRequires:  libatomic
 BuildRequires:  procps
 BuildRequires:  clang-devel clang-libs clang-tools-extra clang-tools-extra-devel
 BuildRequires:  perl-IPC-Cmd
+BuildRequires:  kernel-headers
 
 
 %description
