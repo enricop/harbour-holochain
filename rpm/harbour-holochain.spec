@@ -1,6 +1,6 @@
 Name:       holochain
 Summary:    Holochain for SailfishOS build example
-Version:    0.5.6
+Version:    0.6.0
 Release:    1
 License:    CAL-1.0
 URL:        https://www.holochain.org/
@@ -68,7 +68,6 @@ export CXX_aarch64_unknown_linux_gnu=aarch64-meego-linux-gnu-g++
 export AR_aarch64_unknown_linux_gnu=aarch64-meego-linux-gnu-ar
 
 cargo install \
-          --locked \
           --target aarch64-unknown-linux-gnu \
           holochain@%{version}
 
