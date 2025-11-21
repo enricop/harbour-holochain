@@ -20,7 +20,7 @@ BuildRequires:  python3-base
 BuildRequires:  libatomic
 BuildRequires:  procps
 BuildRequires:  clang-devel clang-libs clang-tools-extra clang-tools-extra-devel
-BuildRequires:  perl-IPC-Cmd
+BuildRequires:  perl-IPC-Cmd perl-Time-Piece 
 BuildRequires:  kernel-headers
 
 
